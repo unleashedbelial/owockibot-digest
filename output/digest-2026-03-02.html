@@ -1,95 +1,319 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Owockibot Weekly Digest — 2026-03-02</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🌊 Owockibot Weekly Digest — 2026-03-02</title>
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; background: #0a0a0a; color: #e0e0e0; max-width: 640px; margin: 0 auto; padding: 24px; }
-  h1 { color: #f4c542; font-size: 28px; border-bottom: 2px solid #f4c542; padding-bottom: 8px; }
-  h2 { color: #f4c542; font-size: 18px; margin-top: 28px; }
-  p { line-height: 1.6; color: #ccc; }
-  ul { padding-left: 20px; }
-  li { margin: 6px 0; color: #ccc; }
-  strong { color: #fff; }
-  a { color: #f4c542; }
-  hr { border: none; border-top: 1px solid #333; margin: 24px 0; }
-  em { color: #888; font-style: normal; }
-  .footer { color: #555; font-size: 12px; text-align: center; margin-top: 32px; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #080c10;
+    color: #d4d8de;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    line-height: 1.6;
+  }
+  .header {
+    border-bottom: 2px solid #f4c542;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .header h1 {
+    color: #f4c542;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .header .subtitle {
+    color: #666;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: #0f151c;
+    border: 1px solid #1e2a38;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-card .value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f4c542;
+    display: block;
+  }
+  .stat-card .label {
+    font-size: 11px;
+    color: #556;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+  .section {
+    margin-bottom: 28px;
+  }
+  h2 {
+    color: #f4c542;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .bounty-row {
+    background: #0f151c;
+    border: 1px solid #1a2330;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .bounty-title {
+    font-size: 14px;
+    color: #e0e4ea;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .bounty-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .tag.green {
+    background: #0d2e1a;
+    color: #4ade80;
+    border: 1px solid #14532d;
+  }
+  .addr {
+    font-family: monospace;
+    font-size: 11px;
+    color: #556;
+  }
+  .link {
+    color: #f4c542;
+    text-decoration: none;
+    font-size: 12px;
+  }
+  .link:hover { text-decoration: underline; }
+  .treasury-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
+  }
+  .holding {
+    background: #0f151c;
+    border: 1px solid #1a2330;
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .symbol {
+    font-size: 12px;
+    font-weight: 600;
+    color: #f4c542;
+  }
+  .bal {
+    font-size: 12px;
+    color: #889;
+    font-family: monospace;
+  }
+  .builders-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .builder-tag {
+    background: #0f151c;
+    border: 1px solid #1e2a38;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #aab;
+    text-decoration: none;
+  }
+  .builder-tag:hover { border-color: #f4c542; color: #f4c542; }
+  .tweet-row {
+    padding: 12px 0;
+    border-bottom: 1px solid #141c26;
+  }
+  .tweet-row:last-child { border-bottom: none; }
+  .tweet-meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #556;
+  }
+  .muted { color: #445; font-size: 13px; }
+  .footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid #1a2330;
+    font-size: 12px;
+    color: #445;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer a { color: #f4c54280; text-decoration: none; }
+  .footer a:hover { color: #f4c542; }
 </style>
 </head>
 <body>
-<strong>Week of 2026-02-23 → 2026-03-02</strong>
-<ul>
-<li><strong>Total bounties:</strong> 82</li>
-<li><strong>Completed (all time):</strong> 39</li>
-<li><strong>Total USDC paid:</strong> $920</li>
-<li><strong>Open bounties:</strong> 0</li>
-</ul>
-<strong>11 bounties completed — $275 USDC paid</strong>
-<ul>
-<li><strong>Agent-to-Agent Communication Protocol Demo</strong> — $40 USDC → 0xC376...d3e2</li>
-</ul>
-<p>  - 📎 <a href="https://nou-techne.github.io/a2a-protocol-demo/" style="color:#f4c542">https://nou-techne.github.io/a2a-protocol-demo/</a></p>
-<ul>
-<li><strong>Create a bounty completion analytics page for owockibot.xyz</strong> — $30 USDC → 0xC376...d3e2</li>
-</ul>
-<p>  - 📎 <a href="https://owockibot-analytics.vercel.app/" style="color:#f4c542">https://owockibot-analytics.vercel.app/</a></p>
-<ul>
-<li><strong>Write a "How to Build on the owockibot Ecosystem" tutorial</strong> — $20 USDC → 0x95eb...243b</li>
-</ul>
-<p>  - 📎 <a href="https://x.com/fabsfrenzy101/status/2027683773525954826" style="color:#f4c542">https://x.com/fabsfrenzy101/status/202768377352595</a></p>
-<ul>
-<li><strong>Create an owockibot community onboarding guide video</strong> — $20 USDC → 0x95eb...243b</li>
-</ul>
-<p>  - 📎 <a href="https://youtu.be/SBhv0QMD-D4" style="color:#f4c542">https://youtu.be/SBhv0QMD-D4</a></p>
-<ul>
-<li><strong>Build a watershed data aggregator for Colorado River Basin</strong> — $35 USDC → 0xC376...d3e2</li>
-</ul>
-<p>  - 📎 <a href="https://nou-techne.github.io/watershed-data-collection/" style="color:#f4c542">https://nou-techne.github.io/watershed-data-collec</a></p>
-<ul>
-<li><strong>Build a bounty completion badge system (onchain or off)</strong> — $35 USDC → 0x8037...BC10</li>
-</ul>
-<p>  - 📎 <a href="https://ui-five-gules.vercel.app" style="color:#f4c542">https://ui-five-gules.vercel.app</a></p>
-<ul>
-<li><strong>Write a getting-started guide for owockibot builders</strong> — $15 USDC → 0x7284...25a0</li>
-</ul>
-<p>  - 📎 <a href="https://github.com/franklin52448-max/owockibot-guidelines-/blob/b43b433de3438bf5e14b4872446a7019ae8e3c27/The%20New%20Builder%E2%80%99s%20Guide%20to%20Owockibot.md" style="color:#f4c542">https://github.com/franklin52448-max/owockibot-gui</a></p>
-<ul>
-<li><strong>Build an owockibot Farcaster frame</strong> — $30 USDC → 0x8037...BC10</li>
-</ul>
-<p>  - 📎 <a href="https://owockibot-farcaster-frame.vercel.app" style="color:#f4c542">https://owockibot-farcaster-frame.vercel.app</a></p>
-<ul>
-<li><strong>[WEEKLY] Best Content — Week of Feb 23</strong> — $10 USDC → 0x95eb...243b</li>
-</ul>
-<p>  - 📎 <a href="https://x.com/fabsfrenzy101/status/2026267515614101927" style="color:#f4c542">https://x.com/fabsfrenzy101/status/202626751561410</a></p>
-<ul>
-<li><strong>[WEEKLY] Best X Thread — Week of Feb 23</strong> — $15 USDC → 0x7284...25a0</li>
-</ul>
-<p>  - 📎 <a href="https://x.com/ChideraE78353/status/2022776469584277982?t=bnK9RAR-5_8WPB21XFLiXg&s=19" style="color:#f4c542">https://x.com/ChideraE78353/status/202277646958427</a></p>
-<ul>
-<li><strong>Design an owockibot Telegram/Discord sticker pack</strong> — $25 USDC → 0x8037...BC10</li>
-</ul>
-<p>  - 📎 <a href="https://t.me/addstickers/owockibotbeev2" style="color:#f4c542">https://t.me/addstickers/owockibotbeev2</a></p>
-<strong>6 unique wallets active</strong>
-<ul>
-<li><a href="https://basescan.org/address/0x95eb90afc145efb5e3f94ab9a282f3935cf0243b" style="color:#f4c542">0x95eb...243b</a></li>
-<li><a href="https://basescan.org/address/0x80370645C98f05Ad86BdF676FaE54afCDBF5BC10" style="color:#f4c542">0x8037...BC10</a></li>
-<li><a href="https://basescan.org/address/0xC37604A1dD79Ed50A5c2943358db85CB743dd3e2" style="color:#f4c542">0xC376...d3e2</a></li>
-<li><a href="https://basescan.org/address/0x27fE6D57DF3eade7eB6Ca188A355Ed04BaB13E5D" style="color:#f4c542">0x27fE...3E5D</a></li>
-<li><a href="https://basescan.org/address/0x7284e940dDF89dd45E3E6A6EF64d6614e90625a0" style="color:#f4c542">0x7284...25a0</a></li>
-</ul>
-<a href="https://app.safe.global/base:0x26B7805Dd8aEc26DA55fc8e0c659cf6822b740Be" style="color:#f4c542">Safe: 0x26B7805D...</a>
-<ul>
-<li><strong>Sinclair:</strong> 2.00</li>
-<li><strong>CLAWBEE:</strong> 3.00</li>
-<li><strong>dash:</strong> 3.00</li>
-<li><strong>KIMCHI:</strong> 4.00</li>
-<li><strong>WETH:</strong> 5.99</li>
-<li><strong>LIQUID:</strong> 4.00</li>
-<li><strong>MSVP:</strong> 2.00</li>
-<li><strong>owockibot:</strong> 8429916132.00</li>
-</ul>
-<p>---</p>
-<p>*Generated by <a href="https://x.com/unleashedBelial" style="color:#f4c542">unleashedBelial</a> • 2026-03-02*</p>
+
+<div class="header">
+  <h1>🌊 Owockibot Weekly Digest</h1>
+  <div class="subtitle">Week of 2026-02-23 → 2026-03-02</div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <span class="value">11</span>
+    <div class="label">Bounties Completed</div>
+  </div>
+  <div class="stat-card">
+    <span class="value">$275</span>
+    <div class="label">USDC Paid Out</div>
+  </div>
+  <div class="stat-card">
+    <span class="value">6</span>
+    <div class="label">Active Builders</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>✅ Completed This Week</h2>
+  
+        <div class="bounty-row">
+          <div class="bounty-title">Agent-to-Agent Communication Protocol Demo</div>
+          <div class="bounty-meta">
+            <span class="tag green">$40 USDC</span>
+            <span class="addr">0xC376…d3e2</span>
+            <a href="https://nou-techne.github.io/a2a-protocol-demo/" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+        <div class="bounty-row">
+          <div class="bounty-title">Create a bounty completion analytics page for owockibot.xyz</div>
+          <div class="bounty-meta">
+            <span class="tag green">$30 USDC</span>
+            <span class="addr">0xC376…d3e2</span>
+            <a href="https://owockibot-analytics.vercel.app/" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+        <div class="bounty-row">
+          <div class="bounty-title">Write a "How to Build on the owockibot Ecosystem" tutorial</div>
+          <div class="bounty-meta">
+            <span class="tag green">$20 USDC</span>
+            <span class="addr">0x95eb…243b</span>
+            <a href="https://x.com/fabsfrenzy101/status/2027683773525954826" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+        <div class="bounty-row">
+          <div class="bounty-title">Create an owockibot community onboarding guide video</div>
+          <div class="bounty-meta">
+            <span class="tag green">$20 USDC</span>
+            <span class="addr">0x95eb…243b</span>
+            <a href="https://youtu.be/SBhv0QMD-D4" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+        <div class="bounty-row">
+          <div class="bounty-title">Build a watershed data aggregator for Colorado River Basin</div>
+          <div class="bounty-meta">
+            <span class="tag green">$35 USDC</span>
+            <span class="addr">0xC376…d3e2</span>
+            <a href="https://nou-techne.github.io/watershed-data-collection/" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+        <div class="bounty-row">
+          <div class="bounty-title">Build a bounty completion badge system (onchain or off)</div>
+          <div class="bounty-meta">
+            <span class="tag green">$35 USDC</span>
+            <span class="addr">0x8037…BC10</span>
+            <a href="https://ui-five-gules.vercel.app" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+        <div class="bounty-row">
+          <div class="bounty-title">Write a getting-started guide for owockibot builders</div>
+          <div class="bounty-meta">
+            <span class="tag green">$15 USDC</span>
+            <span class="addr">0x7284…25a0</span>
+            <a href="https://github.com/franklin52448-max/owockibot-guidelines-/blob/b43b433de3438bf5e14b4872446a7019ae8e3c27/The%20New%20Builder%E2%80%99s%20Guide%20to%20Owockibot.md" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+        <div class="bounty-row">
+          <div class="bounty-title">Build an owockibot Farcaster frame</div>
+          <div class="bounty-meta">
+            <span class="tag green">$30 USDC</span>
+            <span class="addr">0x8037…BC10</span>
+            <a href="https://owockibot-farcaster-frame.vercel.app" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+        <div class="bounty-row">
+          <div class="bounty-title">[WEEKLY] Best Content — Week of Feb 23</div>
+          <div class="bounty-meta">
+            <span class="tag green">$10 USDC</span>
+            <span class="addr">0x95eb…243b</span>
+            <a href="https://x.com/fabsfrenzy101/status/2026267515614101927" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+        <div class="bounty-row">
+          <div class="bounty-title">[WEEKLY] Best X Thread — Week of Feb 23</div>
+          <div class="bounty-meta">
+            <span class="tag green">$15 USDC</span>
+            <span class="addr">0x7284…25a0</span>
+            <a href="https://x.com/ChideraE78353/status/2022776469584277982?t=bnK9RAR-5_8WPB21XFLiXg&s=19" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+        <div class="bounty-row">
+          <div class="bounty-title">Design an owockibot Telegram/Discord sticker pack</div>
+          <div class="bounty-meta">
+            <span class="tag green">$25 USDC</span>
+            <span class="addr">0x8037…BC10</span>
+            <a href="https://t.me/addstickers/owockibotbeev2" class="link" target="_blank">📎 view</a>
+          </div>
+        </div>
+</div>
+
+<div class="section">
+  <h2>👷 Active Builders</h2>
+  <div class="builders-wrap">
+    <a href="https://basescan.org/address/0x27fE6D57DF3eade7eB6Ca188A355Ed04BaB13E5D" class="builder-tag" target="_blank">0x27fE…3E5D</a><a href="https://basescan.org/address/0x7284e940dDF89dd45E3E6A6EF64d6614e90625a0" class="builder-tag" target="_blank">0x7284…25a0</a><a href="https://basescan.org/address/0x80370645C98f05Ad86BdF676FaE54afCDBF5BC10" class="builder-tag" target="_blank">0x8037…BC10</a><a href="https://basescan.org/address/0x5ed8D2cf60cBe9c71Ab13A6b75f35BBC16F455cB" class="builder-tag" target="_blank">0x5ed8…55cB</a><a href="https://basescan.org/address/0x95eb90afc145efb5e3f94ab9a282f3935cf0243b" class="builder-tag" target="_blank">0x95eb…243b</a><a href="https://basescan.org/address/0xC37604A1dD79Ed50A5c2943358db85CB743dd3e2" class="builder-tag" target="_blank">0xC376…d3e2</a>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🏦 Treasury Holdings
+    <a href="https://app.safe.global/base:0x26B7805Dd8aEc26DA55fc8e0c659cf6822b740Be" class="link" target="_blank" style="font-weight:400;font-size:12px;margin-left:4px">↗ Safe</a>
+  </h2>
+  <div class="treasury-grid">
+    <div class="holding"><span class="symbol">Sinclair</span><span class="bal">2.00</span></div><div class="holding"><span class="symbol">CLAWBEE</span><span class="bal">3.00</span></div><div class="holding"><span class="symbol">dash</span><span class="bal">3.00</span></div><div class="holding"><span class="symbol">KIMCHI</span><span class="bal">4.00</span></div><div class="holding"><span class="symbol">WETH</span><span class="bal">5.99</span></div><div class="holding"><span class="symbol">LIQUID</span><span class="bal">4.00</span></div><div class="holding"><span class="symbol">MSVP</span><span class="bal">2.00</span></div><div class="holding"><span class="symbol">owockibot</span><span class="bal">8429916132.00</span></div>
+  </div>
+</div>
+
+
+
+<div class="footer">
+  <span>Generated by <a href="https://x.com/unleashedBelial">@unleashedBelial</a></span>
+  <span>2026-03-02</span>
+</div>
+
 </body>
 </html>
